@@ -7,6 +7,7 @@ const { Server } = require("socket.io");
 const authRoutes = require("./routes/authRoutes");
 const battleRoutes = require("./routes/battleRoutes");
 const matchmakingRoutes = require("./routes/matchMakingRoutes");
+const connectDB = require("./config/db");
 
 const app = express();
 const server = http.createServer(app);
@@ -68,4 +69,7 @@ app.use((req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+connectDB().then(()=>{
+    server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+})
+
